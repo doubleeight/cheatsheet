@@ -1,0 +1,63 @@
+#add helm repository
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+#list helm repository
+helm repo list
+
+#search in repo for chart
+helm search repo drupal --versions
+
+#install a chart
+helm install mysite bitnami/drupal
+
+#install a chart with values file
+helm install mysite bitnami/drupal --values values.yaml
+
+#install a chart with environment varible
+helm install mysite bitnami/drupal --set drupalUsername=admin
+
+#upgrade a helm release
+helm upgrade mysite bitnami/drupal --set ingress.enabled=true
+
+#upgrade helm chart with new version
+helm repo update
+helm upgrade mysite bitnami/drupal
+helm upgrade mysite bitnami/drupal --version 6.2.22
+
+#upgrade helm chart with values
+helm install mysite bitnami/drupal --values values.yaml
+helm upgrade mysite bitnami/drupal --values values.yaml
+helm upgrade mysite bitnami/drupal --reuse-values
+
+#uninstall release
+helm uninstall mysite
+helm uninstall mysite --namespace first
+helm uninstall --keep-history
+
+#helm dry run
+helm install mysite bitnami/drupal --values values.yaml --set \
+       drupalEmail=foo@example.com --dry-run
+
+#helm get release info
+helm get notes mysite
+helm get values wordpress
+helm get values wordpress --revision 2
+helm get values wordpress --all
+helm get manifest wordpress
+
+#helm history
+helm list
+helm history wordpress
+helm rollback wordpress 2
+helm uninstall wordpress --keep-history
+helm rollback wordpress 4
+
+#helm generate-name
+helm install bitnami/wordpress --generate-name
+helm install bitnami/wordpress --generate-name \
+       --name-template "foo-{{ randAlpha 9 | lower }}"
+helm install drupal bitnami/drupal --namespace mynamespace --create-namespace
+
+#helm misc
+helm upgrade --install wordpress bitnami/wordpress
+

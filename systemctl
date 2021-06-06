@@ -1,0 +1,68 @@
+# systemctl commands
+
+systemctl enable # tell systemd to start service at boot
+
+systemctl edit kubelet.service # or vi /etc/systemd/system/kubelet.service 
+
+systemctl daemon-reload
+
+systemctl restart kubelet.service
+
+systemctl status kubelet.service
+
+
+If you change a systemd service file, systemctl daemon-reload. If the service was not started (eg. kubelet) systemctl enable kubelet; systemctl start kubelet
+
+
+#### to see running processes 
+systemctl
+
+#### use systemctl to get list units that are active, add --all for everything
+systemctl list-units
+
+#### see all service units 
+systemctl list-units -at service
+
+#### see filtered units (all running service)
+systemctl list-units -t service --state running
+
+####  see all service files, see which are enabled or disabled
+systemctl list-unit-files -at service
+
+#### use systemctl to list all units with specific status, inactive, active, enabled, running, exited
+systemctl list-units --all --state=inactive
+
+#### use systemctl to list all unit files
+systemctl list-unit-files
+
+#### see log items from the most recent boot
+journalctl -b
+
+#### to see only kernal messages, add -b for at the most recent boot
+journalctl -k
+
+#### to get the status of a service
+systemctl status nginx.service
+
+#### to get the log entries for a service since boot
+journalctl -b -u nginx.service
+
+#### check out the service file
+systemctl cat nginx.service
+
+#### list dependencies of a service, add --all to expand dependencies recursively 
+systemctl list-dependencies nginx.service
+
+#### to see low level details of a service settings on the system
+systemctl show nginx.service
+
+#### reload or restart service
+sudo systemctl reload-or-restart nginx.service
+
+#### to check if the service is active, enabled or failed
+systemctl is-active | is-enabled | is-failed nginx.service
+
+#### if a node isn't working
+systemctl to figure out what isn't running
+systemctl enable <service>
+systemctl start <whatever_isnt_working>
